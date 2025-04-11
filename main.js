@@ -5,16 +5,18 @@
 
 const cp = require("child_process");
 
+const CF_API_BASE_URL = "https://api.cloudflare.com/client/v4";
+
 const getCurrentRecordId = () => {
   const params = new URLSearchParams({
     name: process.env.INPUT_NAME,
   });
-  
+
   //https://api.cloudflare.com/#dns-records-for-a-zone-list-dns-records
   const { status, stdout } = cp.spawnSync("curl", [
     ...["--header", `Authorization: Bearer ${process.env.INPUT_TOKEN}`],
     ...["--header", "Content-Type: application/json"],
-    `https://api.cloudflare.com/client/v4/zones/${process.env.INPUT_ZONE}/dns_records?${params.toString()}`,
+    `${CF_API_BASE_URL}/zones/${process.env.INPUT_ZONE}/dns_records?${params.toString()}`,
   ]);
 
   if (status !== 0) {
@@ -44,7 +46,7 @@ const deleteRecord = (id) => {
     ...["--silent", "--request", "DELETE"],
     ...["--header", `Authorization: Bearer ${process.env.INPUT_TOKEN}`],
     ...["--header", "Content-Type: application/json"],
-    `https://api.cloudflare.com/client/v4/zones/${process.env.INPUT_ZONE}/dns_records/${id}`,
+    `${CF_API_BASE_URL}/zones/${process.env.INPUT_ZONE}/dns_records/${id}`,
   ]);
 
   if (status !== 0) {
