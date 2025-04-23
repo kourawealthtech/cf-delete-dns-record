@@ -30,8 +30,8 @@ const getCurrentRecordId = () => {
     process.exit(1);
   }
 
-  const name = process.env.INPUT_NAME;
-  const record = result.find((x) => x.name === name);
+  const name = process.env.INPUT_NAME.toLowerCase();
+  const record = result.find((x) => x.name.toLowerCase() === name);
 
   if (!record) {
     return null
