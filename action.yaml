@@ -7,6 +7,12 @@ inputs:
     description: "DNS record ID"
   name:
     description: "DNS record name"
+  include_prefixed:
+    description: >
+      Also delete companion records named "<prefix>-<name>" (live-, staging-,
+      assets-, mcp-, idp-, ...). Set this when tearing down an ephemeral
+      environment so secondary hostnames do not outlive the primary one.
+    default: "false"
   token:
     description: "CloudFlare API token"
     required: true
